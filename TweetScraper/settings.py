@@ -11,6 +11,13 @@ ITEM_PIPELINES = {
     'TweetScraper.pipelines.SaveToFilePipeline':100,
 }
 
+RETRY_HTTP_CODES = [408, 429, 500, 502, 503, 504, 522, 524]
+RETRY_TIMES = 2*60
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
+    'TweetScraper.middlewares.TooManyRequestsRetryMiddleware': 543,
+}
+
 # settings for where to save data on disk
 SAVE_TWEET_PATH = './Data/tweet/'
 SAVE_USER_PATH = './Data/user/'
